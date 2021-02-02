@@ -10,6 +10,7 @@ camera.resolution = (640, 480)
 video_path = '/home/pi/Videos/test_video_480.h264' # path to directory + name of file
 video_time = 10 # time we want to record for
 camera.start_recording(video_path)
+print("camera start")
 camera.wait_recording(video_time)
 camera.stop_recording()
-print("done")
+print("camera done")
