@@ -13,3 +13,6 @@ sensor = adafruit_bno055.BNO055_I2C(i2c)
 
 # To calibrate/configure?  offsets_accelerometer, offsets_magnetometer, offsets_gyroscope, 
 # radius_accelerometer, radius_magnetometer
+
+def get_sensor():
+    return sensor
