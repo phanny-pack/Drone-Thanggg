@@ -5,7 +5,7 @@ mavsim_python
         4/3/2019 - BGM
 """
 import sys
-sys.path.append('..')
+sys.path.append('/home/pi/Drone-Thanggg')
 sys.path.append('c:\\Users\\tbmh1\\OneDrive\\Documents\\EE674') # for windows
 
 import numpy as np
