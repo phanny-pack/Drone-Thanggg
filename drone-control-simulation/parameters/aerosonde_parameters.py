@@ -34,43 +34,43 @@ e3 = e[3]
 #   Physical Parameters
 ######################################################################################
 mass = 11 #kg
-Jx = 0.8244 #kg m^2
+Jx = 0.8244 #kg m^2 # moments of inertia
 Jy = 1.135
 Jz = 1.759
 Jxz = 0.1204
-S_wing = 0.55
-b = 2.8956
-c = 0.18994
-S_prop = 0.2027
-rho = 1.2682
-e = 0.9
+S_wing = 0.55 # area of wing
+b = 2.8956 # wing length
+c = 0.18994 # chord length
+S_prop = 0.2027 # area of propeller
+rho = 1.2682 # density of air
+e = 0.9 # ????
 AR = (b**2) / S_wing
 gravity = 9.8
 
 ######################################################################################
 #   Longitudinal Coefficients
 ######################################################################################
-C_L_0 = 0.23
-C_D_0 = 0.043
-C_m_0 = 0.0135
-C_L_alpha = 5.61
-C_D_alpha = 0.03
+C_L_0 = 0.23 # coefficient of lift (initial)
+C_D_0 = 0.043 # coeeficient of drag (initial)
+C_m_0 = 0.0135 # moment coefficient (initial)
+C_L_alpha = 5.61 #***
+C_D_alpha = 0.03 
 C_m_alpha = -2.74
-C_L_q = 7.95
+C_L_q = 7.95 #***
 C_D_q = 0.0
 C_m_q = -38.21
-C_L_delta_e = 0.13
+C_L_delta_e = 0.13 #***
 C_D_delta_e = 0.0135
 C_m_delta_e = -0.99
 M = 50.0
-alpha0 = 0.47
-epsilon = 0.16
+alpha0 = 0.47 
+epsilon = 0.16 # zero lift drag coefficient
 C_D_p = 0.0
 
 
 ######################################################################################
 #   Lateral Coefficients
-######################################################################################
+###################################################################################### !!!!!!!!!!  WTF ARE THESE  !!!!!!!!!!!!
 C_Y_0 = 0.0
 C_ell_0 = 0.0
 C_n_0 = 0.0
