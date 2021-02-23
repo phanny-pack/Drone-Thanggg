@@ -171,9 +171,9 @@ class path_planner:
             Va = 25
             numberWaypoints = 4
             primaryWaypoints = np.array([[0., 0., -100.],
-                                         [2000., 0., -100.],
-                                         [0., 1500., -100.],
-                                         [3200., 3200., -100.]]).T
+                                         [2000., 0., -75.],
+                                         [0., 1500., -25.],
+                                         [3200., 3200., -0.]]).T
             world_view.drawWaypointPoints(primaryWaypoints)
             primaryWaypointsAirspeed = np.array([[Va, Va, Va, Va]])
             primaryCourseAngles = np.array([[np.radians(0),

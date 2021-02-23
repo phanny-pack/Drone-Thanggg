@@ -56,8 +56,8 @@ altitude_zone = 0.
 #---------airspeed hold using throttle---------------
 omega_n_va = 8
 zeta_va = 3
-airspeed_throttle_kp = omega_n_va**2/TF.T_Va_delta_t_a2[0]
-airspeed_throttle_ki = (2.*zeta_va*omega_n_va - TF.T_Va_delta_t_a1[0])/TF.T_Va_delta_t_a2[0]
+# airspeed_throttle_kp = omega_n_va**2/TF.T_Va_delta_t_a2[0]
+# airspeed_throttle_ki = (2.*zeta_va*omega_n_va - TF.T_Va_delta_t_a1[0])/TF.T_Va_delta_t_a2[0]
 
 
 altitude_hold_zone = 50 #Not sure what is a good number for this. Also, on slides, the pi controllers have a 0 and P

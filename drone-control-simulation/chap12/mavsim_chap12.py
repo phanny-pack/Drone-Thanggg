@@ -5,12 +5,18 @@ mavsim_python
         4/3/2019 - BGM
 """
 import sys
-sys.path.append('..')
-sys.path.append('c:\\Users\\tbmh1\\OneDrive\\Documents\\EE674') # for windows
+sys.path.append('/home/pi/Drone-Thanggg/drone-control-simulation')
+sys.path.append('/home/pi/Drone-Thanggg')
+# sys.path.append('c:\\Users\\tbmh1\\OneDrive\\Documents\\EE674') # for windows
+sys.path.append('c:\\Users\\tbmh1\\OneDrive\\Documents\\Drone-Thanggg') # for windows
+sys.path.append('c:\\Users\\tbmh1\\OneDrive\\Documents\\Drone-Thanggg\\drone-control-simulation') # for windows
+
 
 import numpy as np
 import parameters.simulation_parameters as SIM
 import parameters.planner_parameters as PLAN
+
+# from data_logging.camera_recording import camera
 
 from chap3.data_viewer import data_viewer
 from chap4.wind_simulation import wind_simulation
@@ -24,6 +30,10 @@ from chap12.path_planner import path_planner
 
 # initialize the visualization
 VIDEO = False  # True==write video, False==don't write video
+
+# initialize camera recording
+# camera_recording = camera(640, 480) # recording at 480p, 60 fps (best quality)
+
 world_view = world_viewer()  # initialize the viewer
 data_view = data_viewer()  # initialize view of data plots
 if VIDEO == True:
