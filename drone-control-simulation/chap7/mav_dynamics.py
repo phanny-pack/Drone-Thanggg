@@ -105,6 +105,7 @@ class mav_dynamics:
 
     def update_sensors(self):
         "Return value of sensors on MAV: gyros, accels, static_pressure, dynamic_pressure, GPS"
+        # PLUG IN SENSOR DATA HERE LOL
         phi, theta, psi = Quaternion2Euler(self._state[6:10])
         self.sensors.gyro_x = self._state.item(10) + SENSOR.gyro_x_bias + SENSOR.gyro_sigma*np.random.randn()
         self.sensors.gyro_y = self._state.item(11) + SENSOR.gyro_y_bias + SENSOR.gyro_sigma*np.random.randn()
