@@ -170,16 +170,13 @@ class path_planner:
             self.waypoints.num_waypoints = 0
             Va = 25
             numberWaypoints = 4
-            primaryWaypoints = np.array([[0., 0., -100.],
-                                         [2000., 0., -75.],
-                                         [0., 1500., -25.],
-                                         [3200., 3200., -0.]]).T
+            matrix = open('mydignity.txt').read()
+            matrix = [item.split() for item in matrix.split('\n')[:-1]]
+            primaryWaypoints = np.array(matrix).T.astype(float)
+            
             world_view.drawWaypointPoints(primaryWaypoints)
             primaryWaypointsAirspeed = np.array([[Va, Va, Va, Va]])
-            primaryCourseAngles = np.array([[np.radians(0),
-                                             np.radians(45),
-                                             np.radians(45),
-                                             np.radians(-135)]])
+            primaryCourseAngles = np.full((1, 100), np.radians(45)).astype(float)
             # Make new points before the real waypoints. In line with chi from previous waypoint pointing.
             #At least radius open from collision?? Or just check collision?
             j = 0

@@ -69,7 +69,7 @@ class world_viewer():
 
     def drawWaypointPoints(self, waypoints):
         red = np.array([1., 0., 0., 1])
-        R = np.array([[0, 1, 0], [1, 0, 0], [0, 0, -1]])
+        R = np.array([[0, 1, 0], [1, 0, 0], [0, 0, -1]]).astype(float)
         waypoint_pos = R.T @ waypoints
         waypoints_size = 10 * np.ones((waypoints.shape[1]))
         waypoint_color2 = np.tile(red, (waypoints.shape[1], 1))
