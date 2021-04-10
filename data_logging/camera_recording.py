@@ -7,7 +7,10 @@ class camera:
         self.x = x
         self.y = y
         camera = picamera.PiCamera()
+        # possibly able to change the framerate at higher resolution:
+        # camera = picamera.PiCamera(resolution=(x, y), framerate=60)
         camera.resolution = (x, y)
+        
         # camera.resolution = (640, 480) # best quality, 60 fps
         # camera.resolution = (1280, 720) # 30 fps
         # camera.resolution = (1920, 1080) # 30 fps
