@@ -28,11 +28,20 @@ from chap11.path_manager import path_manager
 from chap12.world_viewer import world_viewer
 from chap12.path_planner import path_planner
 
+# library to run camera in parallel
+# import threading
+
 # initialize the visualization
 VIDEO = False  # True==write video, False==don't write video
 
 # initialize camera recording
 # camera_recording = camera(640, 480) # recording at 480p, 60 fps (best quality)
+
+# code for running camera in parallel (uncomment to test)
+# video_recording = camera(640, 480)
+# video_path = '/home/pi/Videos/test_video_480p.h264' # path to directory + name of file
+# video_time = 60 # time we want to record for
+# camera_thread = threading.Thread(target=video_recording.record_video, args=(video_path, video_time,))
 
 world_view = world_viewer()  # initialize the viewer
 data_view = data_viewer()  # initialize view of data plots
