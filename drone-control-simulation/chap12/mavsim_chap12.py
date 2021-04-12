@@ -42,6 +42,9 @@ VIDEO = False  # True==write video, False==don't write video
 # video_path = '/home/pi/Videos/test_video_480p.h264' # path to directory + name of file
 # video_time = 60 # time we want to record for
 # camera_thread = threading.Thread(target=video_recording.record_video, args=(video_path, video_time,))
+# camera_thread.start()
+
+# probably need to call camera_thread.join() at the very end to wait for camera process to finish as well?
 
 world_view = world_viewer()  # initialize the viewer
 data_view = data_viewer()  # initialize view of data plots
