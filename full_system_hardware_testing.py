@@ -82,6 +82,28 @@ gps.send_command(b"PMTK220,1000")
 last_print = time.monotonic()
 
 
+# DIGITAL POT SETUP
+#!/usr/bin/python
+import spidev
+import time
+
+# import RPi.GPIO as GPIO
+
+# GPIO.setmode(GPIO.BOARD)
+
+# Shown as pin
+#GPIO.setup(16, GPIO.IN)
+
+spi = spidev.SpiDev()
+spi.open(0, 0)
+spi.max_speed_hz = 976000
+
+def write_pot(input):
+    msb = input >> 8
+    lsb = input & 0xFF
+    spi.writebytes2([msb, lsb])
+
+resistanceSPIByte = 0x1FF
 
 while True:
     print("Temperature: {} degrees C".format(sensor.temperature))
@@ -143,4 +165,11 @@ while True:
         if gps.height_geoid is not None:
             print("Height geo ID: {} meters".format(gps.height_geoid))
 
+    for i in range(0x00, 0x1FF, 1):
+        write_pot(i)
+        # time.sleep(.005)
+    for i in range(0x1FF, 0x00, -1):
+        write_pot(i)
+        # time.sleep(.005)  
+    
     time.sleep(1)
