@@ -7,6 +7,7 @@
 import numpy as np
 import sys
 sys.path.append('..')
+sys.path.append('/home/pi/Drone-Thanggg')
 from message_types.msg_waypoints import msg_waypoints
 from planRRT import planRRT
 from planRRTDubins import planRRTDubins
@@ -170,7 +171,7 @@ class path_planner:
             self.waypoints.num_waypoints = 0
             Va = 25
             numberWaypoints = 4
-            matrix = open('mydignity.txt').read()
+            matrix = open('/home/pi/Drone-Thanggg/mydignity.txt').read()
             matrix = [item.split() for item in matrix.split('\n')[:-1]]
             primaryWaypoints = np.array(matrix).T.astype(float)
             

@@ -16,7 +16,7 @@ import numpy as np
 import parameters.simulation_parameters as SIM
 import parameters.planner_parameters as PLAN
 
-# from data_logging.camera_recording import camera
+from data_logging.camera_recording import camera
 
 from chap3.data_viewer import data_viewer
 from chap4.wind_simulation import wind_simulation
@@ -29,7 +29,7 @@ from chap12.world_viewer import world_viewer
 from chap12.path_planner import path_planner
 
 # library to run camera in parallel
-# import threading
+import threading
 
 # initialize the visualization
 VIDEO = False  # True==write video, False==don't write video
@@ -38,9 +38,9 @@ VIDEO = False  # True==write video, False==don't write video
 # camera_recording = camera(640, 480) # recording at 480p, 60 fps (best quality)
 
 # code for running camera in parallel (uncomment to test)
-# video_recording = camera(640, 480)
-# video_path = '/home/pi/Videos/test_video_480p.h264' # path to directory + name of file
-# video_time = 60 # time we want to record for
+video_recording = camera(640, 480)
+video_path = '/home/pi/Videos/test_video_480p_threading.h264' # path to directory + name of file
+video_time = 20 # time we want to record for
 # camera_thread = threading.Thread(target=video_recording.record_video, args=(video_path, video_time,))
 # camera_thread.start()
 
@@ -106,6 +106,8 @@ while sim_time < SIM.end_time:
 
     #-------increment time-------------
     sim_time += SIM.ts_simulation
+
+# camera_thread.join()
 
 if VIDEO == True: video.close()
 

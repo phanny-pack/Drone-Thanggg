@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+import time
 import os
-# import serial
+import serial
 
 from digi.xbee.devices import XBeeDevice, DigiMeshDevice, RemoteXBeeDevice
 os.system("sudo systemctl stop serial-getty@serial0.service")
@@ -20,7 +22,7 @@ os.system("sudo systemctl stop serial-getty@serial0.service")
 #     #counter += 1
 #     x=ser.readline().strip()
 #     print(x)
-#     if x == '61':
+#     if x == 'a':
 #         # GPIO.output(23,GPIO.HIGH)
 #         print("RECEIVED 'A'")
 #         time.sleep(3)
@@ -34,3 +36,15 @@ receiver.open()
 while(1):
     print(receiver.read_data())
 receiver.close()
+
+# import struct
+# port = serial.Serial('/dev/serial0', baudrate=9600, rtscts=True, timeout=0.75)
+# data_struct = struct.Struct('>BHBBBBBBBBBBBBBBBBBBHB')
+# while True:
+#   buf = port.read(24)
+#   if len(buf) == 24:
+#     frm = data_struct.unpack(buf)
+#     if frm[0] == 0x7E:
+#       print("Data packet is ",frm[1], "bytes long")
+#       print("Analog measurement: ",frm[20]," (of 1023)")
+# port.close
