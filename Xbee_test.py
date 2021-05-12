@@ -33,7 +33,7 @@ os.system("sudo systemctl stop serial-getty@serial0.service")
 receiver = XBeeDevice("/dev/serial0", 9600)
 # receiver.close()
 receiver.open()
-remote_device = RemoteXBeeDevice(receiver, XBee64BitAddress.from_hex_string("0013A20040XXXXXX"))
+remote_device = RemoteXBeeDevice(receiver, XBee64BitAddress.from_hex_string("0013A20041C7BFD1"))
 while(1):
     data_variable = receiver.read_data(remote_device)
     if(data_variable is None):
