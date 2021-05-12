@@ -1,4 +1,4 @@
-from digi.xbee.devices import XBeeDevice, XBee64BitAddress
+from digi.xbee.devices import XBeeDevice, XBee64BitAddress, RemoteXBeeDevice
 
 device = XBeeDevice("COM7", 9600)
 device.open()
