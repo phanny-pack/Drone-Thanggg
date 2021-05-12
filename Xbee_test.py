@@ -33,13 +33,18 @@ os.system("sudo systemctl stop serial-getty@serial0.service")
 receiver = XBeeDevice("/dev/serial0", 9600)
 # receiver.close()
 receiver.open()
+# receiver.set_sync_ops_timeout(10)
 remote_device = RemoteXBeeDevice(receiver, XBee64BitAddress.from_hex_string("0013A20041C7BFD1"))
 while(1):
-    data_variable = receiver.read_data(remote_device)
+    data_variable = receiver.read_data_from(remote_device)
     if(data_variable is None):
         print('No Data Found')
     else:
-        print(data_variable)
+        print(data_variable.data.decode("utf-8"))
+        print(data_variable.timestamp)
+        print("============================")
+        print()
+    time.sleep(3)
 receiver.close()
 
 # import struct
