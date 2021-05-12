@@ -3,7 +3,7 @@ import time
 import os
 import serial
 
-from digi.xbee.devices import XBeeDevice, DigiMeshDevice, RemoteXBeeDevice
+from digi.xbee.devices import XBeeDevice, DigiMeshDevice, RemoteXBeeDevice, XBee64BitAddress
 os.system("sudo systemctl stop serial-getty@serial0.service")
 
 # ser = serial.Serial(
@@ -33,8 +33,13 @@ os.system("sudo systemctl stop serial-getty@serial0.service")
 receiver = XBeeDevice("/dev/serial0", 9600)
 # receiver.close()
 receiver.open()
+remote_device = RemoteXBeeDevice(receiver, XBee64BitAddress.from_hex_string("0013A20040XXXXXX"))
 while(1):
-    print(receiver.read_data())
+    data_variable = receiver.read_data(remote_device)
+    if(data_variable is None):
+        print('No Data Found')
+    else:
+        print(data_variable)
 receiver.close()
 
 # import struct
