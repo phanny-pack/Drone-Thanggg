@@ -105,7 +105,23 @@ def write_pot(input):
 
 resistanceSPIByte = 0x1FF
 
+# CAMERA SETUP
+import threading
+from data_logging.camera_recording import camera
+
+# code for running camera in parallel (uncomment to test)
+video_recording = camera(640, 480)
+video_path = '/home/pi/Videos/test_video_480p_threading.h264' # path to directory + name of file
+video_time = 20 # time we want to record for
+camera_thread = threading.Thread(target=video_recording.record_video, args=(video_path, video_time,))
+camera_thread.start()
+
+i = 0
+
 while True:
+    if i % 10 == 0: # every 10 loops check altitude to compare with current altitude
+        temp = gps.altitude_m
+    
     print("Temperature: {} degrees C".format(sensor.temperature))
     """
     print(
@@ -165,11 +181,14 @@ while True:
         if gps.height_geoid is not None:
             print("Height geo ID: {} meters".format(gps.height_geoid))
 
+    if temp != None and gps.altitude_m - temp == 0: # double check to make sure doesnt run while sitting at launch
+        camera_thread.join()
+    
     for i in range(0x00, 0x1FF, 1):
         write_pot(i)
         # time.sleep(.005)
     for i in range(0x1FF, 0x00, -1):
         write_pot(i)
         # time.sleep(.005)  
-    
+    i+=1
     time.sleep(1)

@@ -5,10 +5,10 @@ class camera:
         # Set up the camera
         self.x = x
         self.y = y
-        camera = picamera.PiCamera()
+        self.c = picamera.PiCamera()
         # possibly able to change the framerate at higher resolution:
         # camera = picamera.PiCamera(resolution=(x, y), framerate=60)
-        camera.resolution = (x, y)
+        self.c.resolution = (x, y)
         
         # camera.resolution = (640, 480) # best quality, 60 fps
         # camera.resolution = (1280, 720) # 30 fps
@@ -22,8 +22,8 @@ class camera:
         # We can save the video to the sd card by making a directory
         # video_path = '/home/pi/Videos/test_video_480p.h264' # path to directory + name of file
         # video_time = 60 # time we want to record for
-        camera.start_recording(file_path)
+        self.c.start_recording(file_path)
         print("camera start")
-        camera.wait_recording(time)
-        camera.stop_recording()
+        self.c.wait_recording(time)
+        self.c.stop_recording()
         print("camera done")
