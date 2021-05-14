@@ -1,16 +1,29 @@
-from data_logging import IMU_Logging as IMU
-from data_logging import recovery_system as GPS
+# from data_logging import IMU_Logging as IMU
+
 import time
+import board
+import busio
+import adafruit_gps
 #pip install wiringpi
 import wiringpi
+import serial
+
+uart = serial.Serial("/dev/serial0", baudrate=9600, timeout=10)
+
+gps = adafruit_gps.GPS(uart, debug=False) # Use UART/pyserial
+
+gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
+
+gps.send_command(b"PMTK220,1000")
 
 ACCELERATION_THRESHOLD = 1 # in m/s^2
 GPS_DIFF_THRESHOLD =  0.5 # in m/s
-SLEEP_TIME = 0.1 # in seconds
+SLEEP_TIME = 1 # in seconds
 CHECKS_NEEDED = 5
-gps = adafruit_gps.GPS(uart, debug=False) # Use UART/pyserial
+
 
 def deploy():
+    print("DEPLOYED!!! XD")
     PIN_NUMBA = 18 # to set   
     # use 'GPIO naming'
     wiringpi.wiringPiSetupGpio()
@@ -37,10 +50,14 @@ def deploy():
 def gps_check():
     #GPS.get_velocity() to be implemented
     gps.update()
-    veloc_init = gps.speed_knots
+    veloc_init = gps.altitude_m
     time.sleep(SLEEP_TIME)
-    veloc_after = gps.speed_knots
-    if abs(veloc_init - veloc_after) < GPS_DIFF_THRESHOLD:
+    veloc_after = gps.altitude_m
+    if veloc_init == None or veloc_after == None:
+        print("Was None")
+        return False
+    elif abs(veloc_init - veloc_after) < GPS_DIFF_THRESHOLD:
+        print(veloc_init-veloc_after)
         return True
     return False
 
@@ -60,9 +77,12 @@ def gps_check():
 # Script to be run when nose cap and drone cage have been released (i.e. after the 
 # rocket has finished launching)
 if __name__ == "__main__":
-
-    atTermVel = False
-    while (not atTermVel):
-        # accel_check()
-        atTermVel = gps_check()
+    
+    checkCounter =0
+    while (checkCounter <= CHECKS_NEEDED):
+        if gps_check():
+            checkCounter+= 1
+        else:
+            checkCounter = 0
+        time.sleep(SLEEP_TIME)
     deploy()
