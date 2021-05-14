@@ -8,6 +8,7 @@ ACCELERATION_THRESHOLD = 1 # in m/s^2
 GPS_DIFF_THRESHOLD =  0.5 # in m/s
 SLEEP_TIME = 0.1 # in seconds
 CHECKS_NEEDED = 5
+gps = adafruit_gps.GPS(uart, debug=False) # Use UART/pyserial
 
 def deploy():
     PIN_NUMBA = 18 # to set   
@@ -35,31 +36,33 @@ def deploy():
 # have a difference within the GPS_DIFF_THRESHOLD (AKA velocity is more or less constant)
 def gps_check():
     #GPS.get_velocity() to be implemented
-    veloc_init = GPS.get_velocity()
+    gps.update()
+    veloc_init = gps.speed_knots
     time.sleep(SLEEP_TIME)
-    veloc_after = GPS.get_velocity()
+    veloc_after = gps.speed_knots
     if abs(veloc_init - veloc_after) < GPS_DIFF_THRESHOLD:
-        return true
-    return false
+        return True
+    return False
 
-# Will stall the program until the read acceleration is lower than the threshold
-def accel_check():
-    curChecks =0
-    # There must be a specified amount of consecutive successful acceleration checks
-    # before the program proceeds to secondary checks. This amount is specified by
-    #"CHECKS_NEEDED" 
-    while (curChecks <= CHECKS_NEEDED):
-        if IMU.get_acceleration() >= ACCELERATION_THRESHOLD:
-            curChecks+= 1
-        else:
-            curChecks = 0
-        sleep(SLEEP_TIME)
+# # Will stall the program until the read acceleration is lower than the threshold
+# def accel_check():
+#     curChecks =0
+#     # There must be a specified amount of consecutive successful acceleration checks
+#     # before the program proceeds to secondary checks. This amount is specified by
+#     #"CHECKS_NEEDED"
+#     while (curChecks <= CHECKS_NEEDED):
+#         if IMU.get_acceleration() >= ACCELERATION_THRESHOLD:
+#             curChecks+= 1
+#         else:
+#             curChecks = 0
+#         sleep(SLEEP_TIME)
 
 # Script to be run when nose cap and drone cage have been released (i.e. after the 
 # rocket has finished launching)
 if __name__ == "__main__":
+
     atTermVel = False
     while (not atTermVel):
-        accel_check()
+        # accel_check()
         atTermVel = gps_check()
     deploy()
