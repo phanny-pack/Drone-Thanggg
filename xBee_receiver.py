@@ -7,7 +7,8 @@ from digi.xbee.devices import XBeeDevice, RemoteXBeeDevice, XBee64BitAddress
 #
 # Instantiate receiver Xbee device object
 # Replace COM1 with XBee Device Port, usually starts with /dev/tty
-receiver = XBeeDevice("/dev/serial0", 9600)
+xBeeLocation = "/dev/serial0"
+receiver = XBeeDevice(xBeeLocation, 9600)
 receiver.open()
 
 # Instantiate a remote XBee device object.
