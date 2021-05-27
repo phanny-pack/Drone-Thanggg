@@ -107,20 +107,19 @@ resistanceSPIByte = 0x1FF
 
 # CAMERA SETUP
 import threading
-from data_logging.camera_recording import camera
+import picamera
 
-# code for running camera in parallel (uncomment to test)
-video_recording = camera(640, 480)
+# code for running camera in parallel
+camera = picamera.PiCamera()
+camera.resolution = (640, 480)
 video_path = '/home/pi/Videos/test_video_480p_threading.h264' # path to directory + name of file
-video_time = 20 # time we want to record for
-camera_thread = threading.Thread(target=video_recording.record_video, args=(video_path, video_time,))
+camera_thread = threading.Thread(target=camera.start_recording, args=(video_path,))
 camera_thread.start()
 
 i = 0
+prev_alt = None         # previous altitude from 10 loops ago
 
 while True:
-    if i % 10 == 0: # every 10 loops check altitude to compare with current altitude
-        temp = gps.altitude_m
     
     print("Temperature: {} degrees C".format(sensor.temperature))
     """
@@ -181,8 +180,13 @@ while True:
         if gps.height_geoid is not None:
             print("Height geo ID: {} meters".format(gps.height_geoid))
 
-    if temp != None and gps.altitude_m - temp == 0: # double check to make sure doesnt run while sitting at launch
-        camera_thread.join()
+    # every 10 loops, check if the altitude has changed
+    if i % 10 == 0:
+        if prev_alt != None and gps.altitude_m == prev_alt and not camera_thread.is_alive():
+            camera_thread.join()
+            camera.stop_recording()
+        else:
+            prev_alt = gps.altitude_m
     
     for i in range(0x00, 0x1FF, 1):
         write_pot(i)
