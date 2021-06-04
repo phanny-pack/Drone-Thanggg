@@ -116,7 +116,7 @@ video_path = '/home/pi/Videos/test_video_480p_threading.h264' # path to director
 camera_thread = threading.Thread(target=camera.start_recording, args=(video_path,))
 camera_thread.start()
 
-i = 0
+j = 0
 prev_alt = None         # previous altitude from 10 loops ago
 
 while True:
@@ -179,14 +179,27 @@ while True:
             print("Horizontal dilution: {}".format(gps.horizontal_dilution))
         if gps.height_geoid is not None:
             print("Height geo ID: {} meters".format(gps.height_geoid))
-
-    # every 10 loops, check if the altitude has changed
-    if i % 10 == 0:
-        if prev_alt != None and gps.altitude_m == prev_alt and not camera_thread.is_alive():
-            camera_thread.join()
-            camera.stop_recording()
+        
+        
+    if prev_alt != None:
+        if abs(gps.altitude_m - prev_alt) < 0.2:
+            print()
+            print(camera_thread.is_alive())
+            j+=1
+            print()
+            print('-----CONSTANT ALTITUDE-----', "j = ", j)
+            print()
+            if j == 10 and not camera_thread.is_alive():
+                print('--------ABOUT TO JOIN-----------')
+                camera_thread.join()
+                camera.stop_recording()
+                print()
+                print("----------DONE RECORDING-----------")
+                print()
+                break
         else:
-            prev_alt = gps.altitude_m
+            j = 0
+    prev_alt = gps.altitude_m
     
     for i in range(0x00, 0x1FF, 1):
         write_pot(i)
